@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import BlogForm from './components/BlogForm'
 import Blogs from './components/Blogs'
 import LoginForm from './components/LoginForm'
 import blogService from './services/blogs'
@@ -10,6 +11,11 @@ const App = () => {
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
   const [errorMessage, setErrorMessage] = useState(null)
+  const [newBlog, setNewBlog] = useState({
+    title: '',
+    author: '',
+    url: '',
+  })
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -31,6 +37,8 @@ const App = () => {
       const user = await loginService.login({
         username, password,
       })
+
+      blogService.setToken(user.token)
       window.localStorage.setItem(
         'localUser', JSON.stringify(user)
       )
@@ -50,15 +58,23 @@ const App = () => {
     setUser(null)
   }
 
-  // const noteForm = () => (
-  //   <form onSubmit={addNote}>
-  //     <input
-  //       value={newNote}
-  //       onChange={handleNoteChange}
-  //     />
-  //     <button type="submit">save</button>
-  //   </form>  
-  // )
+  const handleAddBlog = async (event) => {
+    event.preventDefault()
+    try {
+      const _newBlog = await blogService.create(newBlog)
+      setBlogs([...blogs, _newBlog])
+      setNewBlog({
+        title: '',
+        author: '',
+        url: '',
+      })
+    } catch (exception) {
+      setErrorMessage(`${ exception }`)
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+    }
+  }
 
   return (
     <div>
@@ -75,6 +91,8 @@ const App = () => {
               {user.name} logged in
               <button onClick={handleLogout}>logout</button>
             </div>
+            <h2>create new</h2>
+            <BlogForm newBlog={newBlog} setNewBlog={setNewBlog} handleAddBlog={handleAddBlog} />
             <Blogs blogs={blogs} />
           </>
       }
