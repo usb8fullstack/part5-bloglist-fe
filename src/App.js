@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import BlogForm from './components/BlogForm'
 import Blogs from './components/Blogs'
 import LoginForm from './components/LoginForm'
+import Notify from './components/Notify'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
@@ -10,7 +11,7 @@ const App = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
-  const [errorMessage, setErrorMessage] = useState(null)
+  const [notify, setNotify] = useState({})
   const [newBlog, setNewBlog] = useState({
     title: '',
     author: '',
@@ -38,6 +39,11 @@ const App = () => {
         username, password,
       })
 
+      setNotify({ success: 'Login success' })
+      setTimeout(() => {
+        setNotify({})
+      }, 5000)
+
       blogService.setToken(user.token)
       window.localStorage.setItem(
         'localUser', JSON.stringify(user)
@@ -46,9 +52,9 @@ const App = () => {
       setUsername('')
       setPassword('')
     } catch (exception) {
-      setErrorMessage('Wrong credentials')
+      setNotify({ fail: 'wrong username or password' })
       setTimeout(() => {
-        setErrorMessage(null)
+        setNotify({})
       }, 5000)
     }
   }
@@ -62,6 +68,14 @@ const App = () => {
     event.preventDefault()
     try {
       const _newBlog = await blogService.create(newBlog)
+
+      setNotify({
+        success: `a new blog ${_newBlog.title} - ${_newBlog.author} added`
+      })
+      setTimeout(() => {
+        setNotify({})
+      }, 5000)
+
       setBlogs([...blogs, _newBlog])
       setNewBlog({
         title: '',
@@ -69,9 +83,9 @@ const App = () => {
         url: '',
       })
     } catch (exception) {
-      setErrorMessage(`${ exception }`)
+      setNotify({ fail: 'all blank must be filled in' })
       setTimeout(() => {
-        setErrorMessage(null)
+        setNotify({})
       }, 5000)
     }
   }
@@ -81,12 +95,18 @@ const App = () => {
       { 
         user === null
         ?
-          <LoginForm username={username} password={password}
+          <>
+            <h2>log in to application</h2>
+            <Notify notify={notify} />
+            <LoginForm username={username} password={password}
           setUsername={setUsername} setPassword={setPassword}
-          handleLogin={handleLogin} />
+              handleLogin={handleLogin}
+            />
+          </>
         :
           <>
             <h2>blogs</h2>
+            <Notify notify={notify} />
             <div>
               {user.name} logged in
               <button onClick={handleLogout}>logout</button>
