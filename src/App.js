@@ -83,7 +83,7 @@ const App = () => {
         url: '',
       })
     } catch (exception) {
-      setNotify({ fail: 'all blank must be filled in' })
+      setNotify({ fail: `${exception}` })
       setTimeout(() => {
         setNotify({})
       }, 5000)
@@ -111,7 +111,7 @@ const App = () => {
               {user.name} logged in
               <button onClick={handleLogout}>logout</button>
             </div>
-            <h2>create new</h2>
+
             <BlogForm newBlog={newBlog} setNewBlog={setNewBlog} handleAddBlog={handleAddBlog} />
             <Blogs blogs={blogs} />
           </>

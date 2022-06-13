@@ -1,30 +1,31 @@
 import React from 'react'
 
-export default function BlogForm({handleAddBlog, newBlog, setNewBlog}) {
+export default function BlogForm(props) {
   return (
-    <form onSubmit={handleAddBlog}>
+    <form onSubmit={props.handleAddBlog}>
+      <h2>create new</h2>
       <div>
         title:
         <input type="text"
-          value={newBlog.title}
+          value={props.newBlog.title}
           name="Title"
-          onChange={e => setNewBlog({ ...newBlog, title: e.target.value })}
+          onChange={e => props.setNewBlog({ ...props.newBlog, title: e.target.value })}
         />
       </div>
       <div>
         author:
         <input type="text"
-          value={newBlog.author}
+          value={props.newBlog.author}
           name="Author"
-          onChange={e => setNewBlog({ ...newBlog, author: e.target.value })}
+          onChange={e => props.setNewBlog({ ...props.newBlog, author: e.target.value })}
         />
       </div>
       <div>
         url:
         <input type="text"
-          value={newBlog.url}
+          value={props.newBlog.url}
           name="Url"
-          onChange={e => setNewBlog({ ...newBlog, url: e.target.value })}
+          onChange={e => props.setNewBlog({ ...props.newBlog, url: e.target.value })}
         />
       </div>
       <button type="submit">create</button>
