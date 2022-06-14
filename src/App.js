@@ -117,6 +117,35 @@ const App = () => {
     }
   }
 
+  const handleRemove = async (blog, id) => {
+    if (window.confirm(`Remove blog: ${blog.title} - by ${blog.author} ?`)) {
+      try {
+        await blogService.del(id)
+        setNotify({
+          success: `Delete ${blog.title} successful`
+        })
+        setTimeout(() => {
+          setNotify({})
+        }, 5000)
+
+        setBlogs(blogs.filter(o => o.id !== id))
+      } catch(exception) {
+          if (exception.response.status === 401) {
+            setNotify({ fail: 'Your session is expired or Users can only delete their OWN blogs!' })
+          }
+          else if (exception.response.status === 400 || exception.response.status === 404) {
+            setNotify({ fail: 'This blog has been removed from server or id blog is invalid type, the page will be refreshed' })
+            setBlogs(blogs.filter(o => o.id !== id))
+          } else {
+            setNotify({ fail: `${exception}` })
+          }
+          setTimeout(() => {
+            setNotify({})
+          }, 5000)
+      }
+    }
+  }
+
   return (
     <div>
       { 
@@ -142,7 +171,7 @@ const App = () => {
             <Togglable buttonLabel="new blog" ref={blogFormRef}>
               <BlogForm handleAddBlog={handleAddBlog} />
             </Togglable>
-            <Blogs blogs={blogs} handleUpdate={handleUpdate} />
+            <Blogs blogs={blogs} handleUpdate={handleUpdate} handleRemove={handleRemove} />
           </>
       }
     </div>

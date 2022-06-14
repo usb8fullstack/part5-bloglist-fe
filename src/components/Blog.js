@@ -1,7 +1,7 @@
 import { React, useState } from "react"
 import BlogDetail from './BlogDetail'
 
-const Blog = ({blog, handleUpdate}) => {
+const Blog = ({blog, handleUpdate, handleRemove}) => {
   const [toggle, setToggle] = useState(false)
 
   const handleToggle = () => {
@@ -25,7 +25,10 @@ const Blog = ({blog, handleUpdate}) => {
             {blog.title} - {blog.author}
             <button onClick={handleToggle}>{ toggle ? 'hide' : 'view'}</button>
           </>
-        : <BlogDetail blog={blog} toggle={toggle} handleToggle={handleToggle} handleUpdate={handleUpdate} />
+        : 
+          <BlogDetail blog={blog} toggle={toggle} handleToggle={handleToggle}
+            handleUpdate={handleUpdate} handleRemove={handleRemove}
+          />
       }
     </div>  
   )
