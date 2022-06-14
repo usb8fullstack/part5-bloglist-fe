@@ -5,7 +5,7 @@ export default function Blogs(props) {
   return (
     <>
       {props.blogs.map(o =>
-        <Blog key={o.id} blog={o} />
+        <Blog key={o.id} blog={o} handleUpdate={props.handleUpdate}/>
       )}
     </>
   )

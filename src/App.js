@@ -96,6 +96,26 @@ const App = () => {
     }
   }
 
+  const handleUpdate = async (newBlog, id) => {
+    try {
+      const _newBlog = await blogService.update(newBlog, id)
+
+      setNotify({
+        success: `Your like is success`
+      })
+      setTimeout(() => {
+        setNotify({})
+      }, 5000)
+
+      setBlogs(blogs.map(o => (o.id !== id) ? o : _newBlog ))
+    } catch(exception) {
+      setNotify({ fail: `${exception}` })
+      setTimeout(() => {
+        setNotify({})
+      }, 5000)
+    }
+  }
+
   return (
     <div>
       { 
@@ -121,7 +141,7 @@ const App = () => {
             <Togglable buttonLabel="new blog" ref={blogFormRef}>
               <BlogForm handleAddBlog={handleAddBlog} />
             </Togglable>
-            <Blogs blogs={blogs} />
+            <Blogs blogs={blogs} handleUpdate={handleUpdate} />
           </>
       }
     </div>
