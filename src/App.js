@@ -13,11 +13,6 @@ const App = () => {
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
   const [notify, setNotify] = useState({})
-  const [newBlog, setNewBlog] = useState({
-    title: '',
-    author: '',
-    url: '',
-  })
 
   const blogFormRef = useRef()
 
@@ -29,8 +24,19 @@ const App = () => {
 
   useEffect(() => {
     const _user = window.localStorage.getItem('localUser')
+    // NOTE: promise
+    // if (_user) {
+    //   const set = new Promise((resolve, reject) => {
+    //     setUser(JSON.parse(_user))
+    //     resolve(true)
+    //   })
+    //   set
+    //     .then(() => blogService.setToken(user.token))
+    // }
     if (_user) {
-      setUser(JSON.parse(_user))
+      const _userObj = JSON.parse(_user)
+      setUser(_userObj)
+      blogService.setToken(_userObj.token)
     }
   }, [])
 
@@ -67,8 +73,7 @@ const App = () => {
     setUser(null)
   }
 
-  const handleAddBlog = async (event) => {
-    event.preventDefault()
+  const handleAddBlog = async (newBlog) => {
     try {
       const _newBlog = await blogService.create(newBlog)
 
@@ -80,17 +85,14 @@ const App = () => {
       }, 5000)
 
       setBlogs([...blogs, _newBlog])
-      setNewBlog({
-        title: '',
-        author: '',
-        url: '',
-      })
       blogFormRef.current.toggleVisibility()
-    } catch (exception) {
+      return true
+    } catch(exception) {
       setNotify({ fail: `${exception}` })
       setTimeout(() => {
         setNotify({})
       }, 5000)
+      return false
     }
   }
 
@@ -117,7 +119,7 @@ const App = () => {
             </div>
 
             <Togglable buttonLabel="new blog" ref={blogFormRef}>
-              <BlogForm newBlog={newBlog} setNewBlog={setNewBlog} handleAddBlog={handleAddBlog} />
+              <BlogForm handleAddBlog={handleAddBlog} />
             </Togglable>
             <Blogs blogs={blogs} />
           </>
