@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import BlogForm from './components/BlogForm'
 import Blogs from './components/Blogs'
 import LoginForm from './components/LoginForm'
@@ -18,6 +18,8 @@ const App = () => {
     author: '',
     url: '',
   })
+
+  const blogFormRef = useRef()
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -83,6 +85,7 @@ const App = () => {
         author: '',
         url: '',
       })
+      blogFormRef.current.toggleVisibility()
     } catch (exception) {
       setNotify({ fail: `${exception}` })
       setTimeout(() => {
@@ -113,7 +116,7 @@ const App = () => {
               <button onClick={handleLogout}>logout</button>
             </div>
 
-            <Togglable buttonLabel="new blog">
+            <Togglable buttonLabel="new blog" ref={blogFormRef}>
               <BlogForm newBlog={newBlog} setNewBlog={setNewBlog} handleAddBlog={handleAddBlog} />
             </Togglable>
             <Blogs blogs={blogs} />
