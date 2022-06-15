@@ -7,18 +7,26 @@ export default function BlogForm({ handleAddBlog }) {
     url: '',
   })
 
-  const handleOnSubmit = (event) => {
+  const handleOnSubmit = async (event) => {
     event.preventDefault()
-    handleAddBlog(newBlog)
-      .then((res) => {
-        if (res === true) {
-          setNewBlog({
-            title: '',
-            author: '',
-            url: '',
-          })
-        }
+    // handleAddBlog(newBlog)
+    //   .then((res) => {
+    //     if (res === true) {
+    //       setNewBlog({
+    //         title: '',
+    //         author: '',
+    //         url: '',
+    //       })
+    //     }
+    //   })
+    const res = await handleAddBlog(newBlog)
+    if (res === true) {
+      setNewBlog({
+        title: '',
+        author: '',
+        url: '',
       })
+    }
   }
 
   return (

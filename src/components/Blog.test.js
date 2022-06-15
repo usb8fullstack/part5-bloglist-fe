@@ -25,6 +25,8 @@ test('renders content', () => {
   // screen.debug()  // NOTE: debug
   // screen.debug(div1)
 
+  // const urlElement = screen.getByText('www.test-url1')
+  // NOTE: throw err, but query not throw
   const urlElement = screen.queryByText('www.test-url1')
   expect(urlElement).toBeNull()
 
