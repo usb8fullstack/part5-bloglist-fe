@@ -13,11 +13,11 @@ const BlogDetail = (props) => {
         </button>
       </div>
       <div>{blog.author}</div>
-      <div>
+      <div className='like'>
         like {blog.likes}&nbsp;
         <button onClick={() => props.handleUpdate(_newBlog, blog.id)}>like</button>
       </div>
-      <div>{blog.author}</div>
+      <div>{blog.url}</div>
       {
         props.userId === blog.user.id
           ? <button onClick={() => props.handleRemove(blog, blog.id)}>remove</button>

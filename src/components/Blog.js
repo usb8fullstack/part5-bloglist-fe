@@ -1,13 +1,13 @@
-import { React } from 'react'
+import { React, useState } from 'react'
 import BlogDetail from './BlogDetail'
 import PropTypes from 'prop-types'
 
 const Blog = (props) => {
-  // const [toggle, setToggle] = useState(false)
+  const [toggle, setToggle] = useState(false)
 
-  // const handleToggle = () => {
-  //   setToggle(!toggle)
-  // }
+  const handleToggle = () => {
+    setToggle(!toggle)
+  }
 
   const blogStyle = {
     paddingTop: 5,
@@ -20,11 +20,11 @@ const Blog = (props) => {
   return (
     <div style={blogStyle}  className='blog'>
       {
-        props.toggle === false
+        toggle === false
           ?
           <>
             {props.blog.title} - {props.blog.author}
-            <button onClick={props.handleToggle}>{ props.toggle ? 'hide' : 'view'}</button>
+            <button onClick={handleToggle}>{ toggle ? 'hide' : 'view'}</button>
           </>
           :
           <BlogDetail {...props} />
