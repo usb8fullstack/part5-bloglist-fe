@@ -18,7 +18,7 @@ const Blog = ({ blog, handleUpdate, handleRemove }) => {
   }
 
   return (
-    <div style={blogStyle}>
+    <div style={blogStyle}  className='blog'>
       {
         toggle === false
           ?
