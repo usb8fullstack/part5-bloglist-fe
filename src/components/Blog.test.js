@@ -68,3 +68,27 @@ test('after clicking the button view/hide, can see url ...', async () => {
   const div = screen.queryByText('www.test-url1')
   expect(div).toBeDefined()
 })
+
+test('clicking 2 times the button likes, calls event handler twice', async () => {
+  const blog = {
+    author: "test-author1",
+    id: "62a8570e45d52368f6fa5723",
+    likes: 2,
+    title: "test-title1",
+    url: "www.test-url1",
+    user: {id: "62a6e4f75ac2bd311f0f29d8", name: "one", username: "test-user1"}
+  }
+
+  const mockHandler = jest.fn()
+
+  render(
+    <Blog blog={blog} toggle={true} handleUpdate={mockHandler} />
+  )
+
+  const user = userEvent.setup()
+  const button = screen.getByText('like')
+  await user.click(button)
+  await user.click(button)
+
+  expect(mockHandler.mock.calls).toHaveLength(2)
+})
