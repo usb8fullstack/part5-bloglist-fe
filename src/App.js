@@ -102,7 +102,7 @@ const App = () => {
       const _newBlog = await blogService.update(newBlog, id)
 
       setNotify({
-        success: `Your like is success`
+        success: 'Your like is success'
       })
       setTimeout(() => {
         setNotify({})
@@ -129,37 +129,38 @@ const App = () => {
         }, 5000)
 
         setBlogs(blogs.filter(o => o.id !== id))
-      } catch(exception) {
-          if (exception.response.status === 401) {
-            setNotify({ fail: 'Your session is expired or Users can only delete their OWN blogs!' })
-          }
-          else if (exception.response.status === 400 || exception.response.status === 404) {
-            setNotify({ fail: 'This blog has been removed from server or id blog is invalid type, the page will be refreshed' })
-            setBlogs(blogs.filter(o => o.id !== id))
-          } else {
-            setNotify({ fail: `${exception}` })
-          }
-          setTimeout(() => {
-            setNotify({})
-          }, 5000)
+      }
+      catch(exception) {
+        if (exception.response.status === 401) {
+          setNotify({ fail: 'Your session is expired or Users can only delete their OWN blogs!' })
+        }
+        else if (exception.response.status === 400 || exception.response.status === 404) {
+          setNotify({ fail: 'This blog has been removed from server or id blog is invalid type, the page will be refreshed' })
+          setBlogs(blogs.filter(o => o.id !== id))
+        } else {
+          setNotify({ fail: `${exception}` })
+        }
+        setTimeout(() => {
+          setNotify({})
+        }, 5000)
       }
     }
   }
 
   return (
     <div>
-      { 
+      {
         user === null
-        ?
+          ?
           <>
             <h2>log in to application</h2>
             <Notify notify={notify} />
             <LoginForm username={username} password={password}
-          setUsername={setUsername} setPassword={setPassword}
+              setUsername={setUsername} setPassword={setPassword}
               handleLogin={handleLogin}
             />
           </>
-        :
+          :
           <>
             <h2>blogs</h2>
             <Notify notify={notify} />

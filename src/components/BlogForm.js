@@ -1,6 +1,6 @@
 import { React, useState } from 'react'
 
-export default function BlogForm({handleAddBlog}) {
+export default function BlogForm({ handleAddBlog }) {
   const [newBlog, setNewBlog] = useState({
     title: '',
     author: '',
@@ -24,7 +24,7 @@ export default function BlogForm({handleAddBlog}) {
   return (
     <div>
       <h2>create new blog</h2>
-      
+
       <form onSubmit={handleOnSubmit}>
         <div>
           title:

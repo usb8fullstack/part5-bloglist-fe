@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Notify = ({notify}) => {
+const Notify = ({ notify }) => {
   const successStyle = {
     color: 'green',
     background: '#a7a7a8',
@@ -17,12 +17,12 @@ const Notify = ({notify}) => {
   }
 
   return (
+    // (Object.keys(notify).length === 0)
     (!notify.success && !notify.fail)
-    // (Object.keys(notify).length === 0) 
-    ? <></>
-    : (notify.success)
-      ? <div style={successStyle}>{notify.success}</div>
-      : <div style={failStyle}>{notify.fail}</div>
+      ? <></>
+      : (notify.success)
+        ? <div style={successStyle}>{notify.success}</div>
+        : <div style={failStyle}>{notify.fail}</div>
   )
 }
 
