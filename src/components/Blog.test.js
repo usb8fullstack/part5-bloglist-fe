@@ -8,12 +8,12 @@ afterEach(() => cleanup())
 
 test('renders content', () => {
   const blog = {
-    author: "test-author1",
-    id: "62a8570e45d52368f6fa5723",
+    author: 'test-author1',
+    id: '62a8570e45d52368f6fa5723',
     likes: 2,
-    title: "test-title1",
-    url: "www.test-url1",
-    user: {id: "62a6e4f75ac2bd311f0f29d8", name: "one", username: "test-user1"}
+    title: 'test-title1',
+    url: 'www.test-url1',
+    user: { id: '62a6e4f75ac2bd311f0f29d8', name: 'one', username: 'test-user1' }
   }
 
   const mockHandler = jest.fn()
@@ -36,12 +36,12 @@ test('renders content', () => {
 
 test('after clicking the button view/hide, then can see url ...', () => {
   const blog = {
-    author: "test-author1",
-    id: "62a8570e45d52368f6fa5723",
+    author: 'test-author1',
+    id: '62a8570e45d52368f6fa5723',
     likes: 2,
-    title: "test-title1",
-    url: "www.test-url1",
-    user: {id: "62a6e4f75ac2bd311f0f29d8", name: "one", username: "test-user1"}
+    title: 'test-title1',
+    url: 'www.test-url1',
+    user: { id: '62a6e4f75ac2bd311f0f29d8', name: 'one', username: 'test-user1' }
   }
 
   const mockHandler = jest.fn()
@@ -49,7 +49,7 @@ test('after clicking the button view/hide, then can see url ...', () => {
     <Blog blog={blog} handleUpdate={mockHandler} handleRemove={mockHandler} />
   )
 
-  const buttonElement = screen.queryByRole('button', {name: /view/i})
+  const buttonElement = screen.queryByRole('button', { name: /view/i })
   fireEvent.click(buttonElement)
 
   const urlElement = screen.queryByText('www.test-url1')
@@ -62,12 +62,12 @@ test('after clicking the button view/hide, then can see url ...', () => {
 
 test('clicking 2 times the button likes, calls event handler twice', async () => {
   const blog = {
-    author: "test-author1",
-    id: "62a8570e45d52368f6fa5723",
+    author: 'test-author1',
+    id: '62a8570e45d52368f6fa5723',
     likes: 2,
-    title: "test-title1",
-    url: "www.test-url1",
-    user: {id: "62a6e4f75ac2bd311f0f29d8", name: "one", username: "test-user1"}
+    title: 'test-title1',
+    url: 'www.test-url1',
+    user: { id: '62a6e4f75ac2bd311f0f29d8', name: 'one', username: 'test-user1' }
   }
 
   const mockHandler = jest.fn()
@@ -76,7 +76,7 @@ test('clicking 2 times the button likes, calls event handler twice', async () =>
     <Blog blog={blog} handleUpdate={mockHandler} handleRemove={mockHandler} />
   )
 
-  const buttonElement = screen.queryByRole('button', {name: /view/i})
+  const buttonElement = screen.queryByRole('button', { name: /view/i })
   fireEvent.click(buttonElement)
 
   const user = userEvent.setup()
