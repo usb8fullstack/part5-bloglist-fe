@@ -8,14 +8,14 @@ const BlogDetail = (props) => {
     <div>
       <div>
         {blog.title}
-        <button onClick={props.handleToggle}>
-          { props.toggle ? 'hide' : 'view'}
-        </button>
+        <button onClick={props.handleToggle}>hide</button>
       </div>
       <div>{blog.author}</div>
       <div className='like'>
         like {blog.likes}&nbsp;
-        <button onClick={() => props.handleUpdate(_newBlog, blog.id)}>like</button>
+        <button id='like-button' onClick={() => props.handleUpdate(_newBlog, blog.id)}>
+          like
+        </button>
       </div>
       <div>{blog.url}</div>
       {

@@ -64,18 +64,49 @@ describe('Blog app', function() {
       cy.login({ username: 'user1', password: 'passuser1' })
     })
 
-    it.only('a new blog can be created', function() {
+    it('a new blog can be created', function() {
       cy.contains('new blog').click()
       
       cy.get('#title').type('test-title3')
       cy.get('#author').type('test-author3')
-      cy.get('#url').type('test-url3')
+      cy.get('#url').type('www.test-url3')
       // cy.contains('create').click()  // NOTE: make err !!!
       cy.get('#add-blog-button').click()
 
       cy.contains('test-title3')
       cy.contains('test-author3')
     })
+
+
+    describe('and several blogs exist', function () {
+      beforeEach(function () {
+        cy.createBlog({
+          title: 'test-title4',
+          author: 'test-author4',
+          url: 'www.test-url4'
+        })
+        cy.createBlog({
+          title: 'test-title5',
+          author: 'test-author5',
+          url: 'www.test-url5'
+        })
+      })
+
+      it('one of those can be add likes', function () {
+        cy.contains('test-title4')
+          .contains('view')
+          .click()
+
+        cy.get('#like-button')
+          .click()
+
+        cy.contains('test-title4')
+          .parent()
+          .contains('like 1')
+      })
+    })
+
+
   })
 
 

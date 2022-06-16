@@ -24,10 +24,12 @@ const Blog = (props) => {
           ?
           <>
             {props.blog.title} - {props.blog.author}
-            <button onClick={handleToggle}>{ toggle ? 'hide' : 'view'}</button>
+            <button onClick={handleToggle}>view</button>
           </>
           :
-          <BlogDetail {...props} />
+          <BlogDetail {...props} toggle={toggle} setToggle={setToggle}
+            handleToggle={handleToggle}
+          />
       }
     </div>
   )
