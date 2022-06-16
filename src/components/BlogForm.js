@@ -36,7 +36,7 @@ export default function BlogForm({ handleAddBlog }) {
       <form onSubmit={handleOnSubmit}>
         <div>
           title:
-          <input type="text"
+          <input type="text" id="title"
             value={newBlog.title}
             name="Title"
             onChange={e => setNewBlog({ ...newBlog, title: e.target.value })}
@@ -44,7 +44,7 @@ export default function BlogForm({ handleAddBlog }) {
         </div>
         <div>
           author:
-          <input type="text"
+          <input type="text" id="author"
             value={newBlog.author}
             name="Author"
             onChange={e => setNewBlog({ ...newBlog, author: e.target.value })}
@@ -52,13 +52,13 @@ export default function BlogForm({ handleAddBlog }) {
         </div>
         <div>
           url:
-          <input type="text"
+          <input type="text" id="url"
             value={newBlog.url}
             name="Url"
             onChange={e => setNewBlog({ ...newBlog, url: e.target.value })}
           />
         </div>
-        <button type="submit">create</button>
+        <button id="add-blog-button" type="submit">create</button>
       </form>
     </div>
   )

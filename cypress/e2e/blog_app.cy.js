@@ -30,7 +30,7 @@ describe('Blog app', function() {
       cy.contains('one logged in')
     })
 
-    it.only('fails with wrong credentials', function() {
+    it('fails with wrong credentials', function() {
       cy.get('#username').type('user11')
       cy.get('#password').type('passuser1')
       cy.get('#login-button').click()
@@ -44,6 +44,28 @@ describe('Blog app', function() {
         .and('have.css', 'border-style', 'solid')
 
       cy.get('html').should('not.contain', 'one logged in')
+    })
+  })
+
+
+  describe('When logged in', function() {
+    beforeEach(function() {
+      cy.get('#username').type('user1')
+      cy.get('#password').type('passuser1')
+      cy.get('#login-button').click()
+    })
+
+    it.only('a new blog can be created', function() {
+      cy.contains('new blog').click()
+      
+      cy.get('#title').type('test-title3')
+      cy.get('#author').type('test-author3')
+      cy.get('#url').type('test-url3')
+      // cy.contains('create').click()  // NOTE: make err !!!
+      cy.get('#add-blog-button').click()
+
+      cy.contains('test-title3')
+      cy.contains('test-author3')
     })
   })
 
