@@ -22,7 +22,7 @@ const Notify = ({ notify }) => {
       ? <></>
       : (notify.success)
         ? <div style={successStyle}>{notify.success}</div>
-        : <div style={failStyle}>{notify.fail}</div>
+        : <div style={failStyle} className="error">{notify.fail}</div>
   )
 }
 

@@ -20,11 +20,32 @@ describe('Blog app', function() {
     cy.get('#password').should('be.visible')
   })
 
-  it('user can log in', function () {
-    cy.get('#username').type('user1')
-    cy.get('#password').type('passuser1')
-    cy.get('#login-button').click()
 
-    cy.contains('one logged in')
+  describe('Login',function() {
+    it('succeeds with correct credentials', function() {
+      cy.get('#username').type('user1')
+      cy.get('#password').type('passuser1')
+      cy.get('#login-button').click()
+  
+      cy.contains('one logged in')
+    })
+
+    it.only('fails with wrong credentials', function() {
+      cy.get('#username').type('user11')
+      cy.get('#password').type('passuser1')
+      cy.get('#login-button').click()
+
+      // cy.get('#login-button').should('be.visible')
+      // cy.contains('wrong username or password')
+      // cy.get('.error').contains('wrong username or password')
+      cy.get('.error')
+        .should('contain', 'wrong username or password')
+        .and('have.css', 'color', 'rgb(255, 0, 0)')
+        .and('have.css', 'border-style', 'solid')
+
+      cy.get('html').should('not.contain', 'one logged in')
+    })
   })
+
+
 })
