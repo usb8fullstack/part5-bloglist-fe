@@ -19,8 +19,13 @@ const BlogDetail = (props) => {
       </div>
       <div>{blog.url}</div>
       {
-        props.userId === blog.user.id
-          ? <button onClick={() => props.handleRemove(blog, blog.id)}>remove</button>
+        (props.userId === blog.user.id || props.userId === blog.user)
+          ?
+          <button id='remove-blog-button'
+            onClick={() => props.handleRemove(blog, blog.id)}
+          >
+            remove
+          </button>
           : <></>
       }
     </div>

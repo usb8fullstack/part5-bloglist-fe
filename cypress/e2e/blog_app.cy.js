@@ -1,17 +1,23 @@
 describe('Blog app', function() {
   beforeEach(function() {
     cy.request('POST', 'http://localhost:3003/api/testing/reset')
-    const user = {
+    const user1 = {
       name: 'one',
       username: 'user1',
       password: 'passuser1'
     }
-    cy.request('POST', 'http://localhost:3003/api/users/', user)
+    cy.request('POST', 'http://localhost:3003/api/users/', user1)
+    const user2 = {
+      name: 'two',
+      username: 'user2',
+      password: 'passuser2'
+    }
+    cy.request('POST', 'http://localhost:3003/api/users/', user2)
 
     cy.visit('http://localhost:3000')
   })
 
-  xit('front page can be opened', function() {
+  it('front page can be opened', function() {
     cy.contains('log in to application')
   })
 
@@ -103,6 +109,33 @@ describe('Blog app', function() {
         cy.contains('test-title4')
           .parent()
           .contains('like 1')
+      })
+
+      it('one of those cannot be remove if user is not owner', function () {
+        cy.get('#logout-button')
+          .click()
+        cy.login({ username: 'user2', password: 'passuser2' })
+      
+        cy.contains('test-title5')
+          .contains('view')
+          .click()
+      
+        cy.contains('test-title5')
+          .parent()
+          .should('not.contain', 'remove')
+      })
+
+      // NOTE: if this test run before other test >>> err before each !!! 
+      it('one of those can be remove only if user is owner', function () {
+        cy.contains('test-title4')
+          .contains('view')
+          .click()
+
+        cy.get('#remove-blog-button')
+          .click()
+
+        // cy.get('html').should('not.contain', 'test-title4')  // NOTE: html cause err !!!
+        cy.should('not.contain', 'test-title4')
       })
     })
 
