@@ -8,7 +8,7 @@ const BlogDetail = (props) => {
     <div>
       <div>
         {blog.title}
-        <button onClick={props.handleToggle}>hide</button>
+        <button id='hide-blog-button' onClick={props.handleToggle}>hide</button>
       </div>
       <div>{blog.author}</div>
       <div className='like'>

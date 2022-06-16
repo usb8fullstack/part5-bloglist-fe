@@ -9,7 +9,7 @@ export default function Blogs(props) {
   return (
     <>
       {props.blogs.map(o =>
-        <Blog key={o.id} {...props} blog={o} userId={userId} />
+        <Blog  className="blog" key={o.id} {...props} blog={o} userId={userId} />
       )}
     </>
   )

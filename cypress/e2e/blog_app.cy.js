@@ -111,6 +111,29 @@ describe('Blog app', function() {
           .contains('like 1')
       })
 
+      // ----------------------------------------------------
+      it('the blogs are ordered according to likes', function () {
+        cy.contains('test-title4')
+          .contains('view')
+          .click()
+        cy.get('#like-button').click()
+        
+        cy.get('html').get('#hide-blog-button').click()
+        cy.contains('test-title5')
+          .contains('view')
+          .click()
+        cy.get('#like-button').click()
+        cy.contains('test-title5')
+          .parent()
+          .contains('like 1')
+        cy.get('#like-button').click()
+
+        cy.reload(true)
+        cy.get('.blog').eq(0).should('contain', 'test-title5')
+        cy.get('.blog').eq(1).should('contain', 'test-title4')
+      })
+
+      // ----------------------------------------------------
       it('one of those cannot be remove if user is not owner', function () {
         cy.get('#logout-button')
           .click()
