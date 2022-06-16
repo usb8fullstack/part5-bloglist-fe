@@ -32,7 +32,7 @@ describe('Blog app', function() {
       cy.get('#username').type('user1')
       cy.get('#password').type('passuser1')
       cy.get('#login-button').click()
-  
+
       cy.contains('one logged in')
     })
 
@@ -72,7 +72,7 @@ describe('Blog app', function() {
 
     it('a new blog can be created', function() {
       cy.contains('new blog').click()
-      
+
       cy.get('#title').type('test-title3')
       cy.get('#author').type('test-author3')
       cy.get('#url').type('www.test-url3')
@@ -117,7 +117,7 @@ describe('Blog app', function() {
           .contains('view')
           .click()
         cy.get('#like-button').click()
-        
+
         cy.get('html').get('#hide-blog-button').click()
         cy.contains('test-title5')
           .contains('view')
@@ -138,17 +138,17 @@ describe('Blog app', function() {
         cy.get('#logout-button')
           .click()
         cy.login({ username: 'user2', password: 'passuser2' })
-      
+
         cy.contains('test-title5')
           .contains('view')
           .click()
-      
+
         cy.contains('test-title5')
           .parent()
           .should('not.contain', 'remove')
       })
 
-      // NOTE: if this test run before other test >>> err before each !!! 
+      // NOTE: if this test run before other test >>> err before each !!!
       it('one of those can be remove only if user is owner', function () {
         cy.contains('test-title4')
           .contains('view')
